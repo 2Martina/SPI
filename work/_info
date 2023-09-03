@@ -1,0 +1,35 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dE:/Quartus-lite-20.1.1.720-windows/components
+vFSM
+!s110 1693732269
+!i10b 1
+!s100 m016e<U4TTT@QeJWWzk[F1
+!s11b Dg1SIo80bB@j0V0VzS_@n1
+Ih^kNJWNh3QHDQ`E1Y_d:@2
+VDg1SIo80bB@j0V0VzS_@n1
+dE:/Martina/GP materials/SPI/SPI
+w1693732265
+8E:/Martina/GP materials/SPI-Martina/FSM.v
+FE:/Martina/GP materials/SPI-Martina/FSM.v
+!i122 0
+L0 1 40
+OV;L;2020.1;71
+r1
+!s85 0
+31
+!s108 1693732269.000000
+!s107 E:/Martina/GP materials/SPI-Martina/FSM.v|
+!s90 -reportprogress|300|-work|work|-stats=none|E:/Martina/GP materials/SPI-Martina/FSM.v|
+!i113 1
+o-work work
+tCvgOpt 0
+n@f@s@m
