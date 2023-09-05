@@ -9,8 +9,13 @@ module FSM
     output reg [9:0] rx_data
 );
     
-    reg state,nextstate,Read;
+    reg state,nextstate,Read,enable_ser_to_par;
     reg [7:0] StoP_out;
+
+    initial begin
+        enable_ser_to_par <= 0;
+    end
+
 
 
 
@@ -69,7 +74,7 @@ module FSM
     end
 
 
-    StoP serial_to_par (clk,MOSI,StoP_out,finish);
+    StoP serial_to_par (clk,MOSI,enable_ser_to_par,StoP_out,finish);
 
     //output logic always block
     always@(posedge clk)
@@ -83,9 +88,10 @@ module FSM
                         
 
             "WRITE" : begin
+            enable_ser_to_par = 1;  //bas lazem nb3at MOSI 3l negedge 3shan b3daha Serial to parallel yshta9al
             rx_data = StoP_out;
             rx_valid = finish;   
-            SS_n = 1;  //should be changed from the Master???
+            //SS_n = 1;  //should be changed from the Master???
             end
 
             
@@ -98,7 +104,7 @@ module FSM
             "READ_ADD" : begin
             rx_data = StoP_out;
             rx_valid = finish;   
-            SS_n = 1;  //should be changed from the Master??
+           // SS_n = 1;  //should be changed from the Master??
             Read ="DATA";   /////?????????????
             end
 

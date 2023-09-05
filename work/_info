@@ -10,26 +10,48 @@ z2
 cModel Technology
 dE:/Quartus-lite-20.1.1.720-windows/components
 vFSM
-!s110 1693732269
+!s110 1693924203
 !i10b 1
-!s100 m016e<U4TTT@QeJWWzk[F1
-!s11b Dg1SIo80bB@j0V0VzS_@n1
-Ih^kNJWNh3QHDQ`E1Y_d:@2
-VDg1SIo80bB@j0V0VzS_@n1
-dE:/Martina/GP materials/SPI/SPI
-w1693732265
-8E:/Martina/GP materials/SPI-Martina/FSM.v
-FE:/Martina/GP materials/SPI-Martina/FSM.v
-!i122 0
-L0 1 40
-OV;L;2020.1;71
+!s100 FT[aaiELzKezEDOX38YRc1
+Z0 !s11b Dg1SIo80bB@j0V0VzS_@n1
+Im9>7WPic6??C6F0TYHm4m0
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dE:/Martina/GP materials/SPI
+w1693924185
+8FSM.v
+FFSM.v
+!i122 2
+L0 1 115
+Z3 OV;L;2020.1;71
 r1
 !s85 0
 31
-!s108 1693732269.000000
-!s107 E:/Martina/GP materials/SPI-Martina/FSM.v|
-!s90 -reportprogress|300|-work|work|-stats=none|E:/Martina/GP materials/SPI-Martina/FSM.v|
+!s108 1693924203.000000
+!s107 FSM.v|
+!s90 FSM.v|
 !i113 1
-o-work work
-tCvgOpt 0
+Z4 tCvgOpt 0
 n@f@s@m
+vStoP
+!s110 1693924199
+!i10b 1
+!s100 L;`nE5Cg^bdM?adzEO8LP1
+R0
+I>hFSGBFm0`zM^kd:B^C@@1
+R1
+R2
+w1693924175
+8StoP.v
+FStoP.v
+!i122 1
+L0 1 50
+R3
+r1
+!s85 0
+31
+!s108 1693924199.000000
+!s107 StoP.v|
+!s90 StoP.v|
+!i113 1
+R4
+n@sto@p

@@ -1,0 +1,15 @@
+# vsim StoP 
+# Start time: 17:30:20 on Sep 05,2023
+# Loading work.StoP
+add wave -position insertpoint sim:/StoP/*
+force -freeze sim:/StoP/clk 0 0, 1 {50 ps} -r 100
+force -freeze sim:/StoP/enable 1 0
+force -freeze sim:/StoP/in 0 0
+run
+force -freeze sim:/StoP/in 1 0
+run
+run
+run
+run
+force -freeze sim:/StoP/in 0 0
+run
