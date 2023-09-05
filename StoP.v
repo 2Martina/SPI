@@ -12,7 +12,6 @@ reg [3:0] i;
 initial begin
     temp=0;
     i=width-1;
-    //out = 0;
     finish=0;
 end
 
@@ -30,13 +29,6 @@ begin
 end
 assign out=temp;
 
-/*always@(negedge clk)
-begin
-    if(enable && i<4'b1001)
-       out <= {in,temp[6:0]};
-    else if (i==4'b1001)
-        finish <= 1;
-end*/
 /* add wave -position insertpoint sim:/StoP/*
 force -freeze sim:/StoP/clk 0 0, 1 {50 ps} -r 10
 force -freeze sim:/StoP/enable 1 0
