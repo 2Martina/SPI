@@ -1,8 +1,3 @@
-# vsim FSM 
-# Start time: 22:18:04 on Sep 06,2023
-# Loading work.FSM
-# Loading work.StoP
-# Loading work.ParallelToSerial
 add wave -position insertpoint sim:/FSM/*
 add wave -position insertpoint sim:/FSM/serial_to_par/*
 add wave -position insertpoint sim:/FSM/PtoS/*
@@ -16,24 +11,3 @@ run
 force -freeze sim:/FSM/rst St1 0
 run
 
-
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-# End time: 22:21:36 on Sep 06,2023, Elapsed time: 0:03:32
-# Errors: 0, Warnings: 0

@@ -10,7 +10,8 @@ module FSM
     output reg [9:0] rx_data
 );
     
-    reg state,nextstate,Read,enable_ser_to_par;
+    reg [2:0] state,nextstate;
+    reg Read,enable_ser_to_par;
     wire [9:0] StoP_out;
 
     reg [7:0] temp_txData; 
@@ -37,42 +38,48 @@ module FSM
 
 
 
+//000: IDLE
+//001: CHK_CMD
+//010: WRITE
+//011: 
+//100: 
+
 //Next state logic always block
     always@(*)
     begin
         case(state)
             3'b000: if(SS_n)
-                    nextstate = "IDLE" ;
+                    nextstate = 3'b000 ;
                     else
-                    nextstate = "CHK_CMD";
+                    nextstate = 3'b001;
 
 
             3'b001 : if(SS_n)
-                        nextstate = "IDLE";
+                        nextstate = 3'b000;
                         else if (SS_n==0 && MOSI==0)
-                        nextstate = "  WRITE";
-                        else if (SS_n==0 && MOSI==1 && Read=="Add")   
-                        nextstate = "READ_ADD";
+                        nextstate = 3'b010;
+                        else if (SS_n==0 && MOSI==1 && Read==0)   
+                        nextstate = 3'b100;
                         else 
-                        nextstate = "READ_DATA";
+                        nextstate = 3'b011;
                         
 
             3'b010 : if(SS_n)
-                      nextstate = "IDLE";
+                      nextstate = 3'b000;
                       else 
-                      nextstate = "WRITE";
+                      nextstate =3'b010;
             
 
         3'b011 : if(SS_n)
-                      nextstate = "IDLE";
+                      nextstate = 3'b000;
                       else 
-                      nextstate = "READ_DATA";
+                      nextstate = 3'b011;
 
             //********when back to IDLE let Read=Data and later change it to Add????????/
             3'b100 : if(SS_n) 
-                         nextstate = "IDLE";
+                         nextstate = 3'b000;
                          else
-                         nextstate = "READ_ADD";
+                         nextstate = 3'b100;
         
 
         endcase

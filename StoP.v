@@ -24,7 +24,7 @@ begin
     temp[i] <= in;
     i<=i-1;
     end
-    else
+    else if (i==0)
     finish<=1;
 end
 assign out=temp;
