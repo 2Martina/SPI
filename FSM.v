@@ -1,19 +1,24 @@
 module FSM
-#(parameter s0="IDLE",s1="READ_DATA",s2="READ_ADD",s3="CHK_CMD",s4="WRITE",Read_PARAM="Add")
+#(parameter s0=3'b000,s1=3'b001,s2=3'b010,s3=3'b011,s4=3'b100)
 (
     input clk,rst,
     MOSI,SS_n,tx_valid,
     input [7:0] tx_data,
 
-    output reg MISO,rx_valid,
+    output reg rx_valid,
+    output wire MISO,
     output reg [9:0] rx_data
 );
     
     reg state,nextstate,Read,enable_ser_to_par;
-    reg [7:0] StoP_out;
+    wire [9:0] StoP_out;
+
+    reg [7:0] temp_txData; 
+    wire [7:0] ttx_data; 
 
     initial begin
         enable_ser_to_par <= 0;
+        Read <= 0; // Read Address
     end
 
 
@@ -23,7 +28,7 @@ module FSM
 //State memory always block
     always@(posedge clk or posedge rst)
     begin
-    if (rst)
+    if (!rst)
     state<= s0;
     else begin
     state<= nextstate;
@@ -36,13 +41,13 @@ module FSM
     always@(*)
     begin
         case(state)
-            "IDLE": if(SS_n)
+            3'b000: if(SS_n)
                     nextstate = "IDLE" ;
                     else
                     nextstate = "CHK_CMD";
 
 
-            "CHK_CMD" : if(SS_n)
+            3'b001 : if(SS_n)
                         nextstate = "IDLE";
                         else if (SS_n==0 && MOSI==0)
                         nextstate = "  WRITE";
@@ -52,19 +57,19 @@ module FSM
                         nextstate = "READ_DATA";
                         
 
-            "WRITE" : if(SS_n)
+            3'b010 : if(SS_n)
                       nextstate = "IDLE";
                       else 
                       nextstate = "WRITE";
             
 
-          //  "READ_DATA" : 
-
-
-
+        3'b011 : if(SS_n)
+                      nextstate = "IDLE";
+                      else 
+                      nextstate = "READ_DATA";
 
             //********when back to IDLE let Read=Data and later change it to Add????????/
-            "READ_ADD" : if(SS_n) 
+            3'b100 : if(SS_n) 
                          nextstate = "IDLE";
                          else
                          nextstate = "READ_ADD";
@@ -74,7 +79,19 @@ module FSM
     end
 
 
-    StoP serial_to_par (clk,MOSI,enable_ser_to_par,StoP_out,finish);
+    StoP #(10) serial_to_par (clk,MOSI,enable_ser_to_par,StoP_out,finish);
+
+  /*  MEM #(256,8) RAM (
+                      .clk         (clk),
+                      .rst         (rst),
+                      .din         (rx_data),
+                      .rx_valid    (rx_valid),
+                      .dout        (temp_txData),   
+                      .tx_valid    (tx_valid)
+
+    );*/
+
+    
 
     //output logic always block
     always@(posedge clk)
@@ -83,12 +100,12 @@ module FSM
             //"IDLE": 
 
 
-           //"CHK_CMD" : 
+           3'b001 : enable_ser_to_par = 1; 
            
                         
 
-            "WRITE" : begin
-            enable_ser_to_par = 1;  //bas lazem nb3at MOSI 3l negedge 3shan b3daha Serial to parallel yshta9al
+            3'b010 : begin
+              //bas lazem nb3at MOSI 3l negedge 3shan b3daha Serial to parallel yshta9al
             rx_data = StoP_out;
             rx_valid = finish;   
             //SS_n = 1;  //should be changed from the Master???
@@ -96,20 +113,31 @@ module FSM
 
             
 
-            "READ_DATA" : begin
-            Read ="DATA";   /////?????????????
+            3'b011 : begin
+               if (tx_valid && Read)
+                begin
+                    temp_txData <= tx_data;
+               end
             end
 
 
-            "READ_ADD" : begin
+            3'b100 : begin
+            enable_ser_to_par = 1;
             rx_data = StoP_out;
             rx_valid = finish;   
            // SS_n = 1;  //should be changed from the Master??
-            Read ="DATA";   /////?????????????
+            Read = 1;   /////?????????????
             end
 
         endcase
      end
 
+assign ttx_data = temp_txData;
+ParallelToSerial PtoS (
+                      .clk             (clk),
+                      .tx_valid        (tx_valid),
+                      .parallel_data   (ttx_data),
+                      .serial_out      (MISO)
+);
 
 endmodule
